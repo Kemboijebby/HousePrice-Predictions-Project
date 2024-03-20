@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nairobi Metropolitan House Prices Prediction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.graphicsprings.com/filestorage/stencils/0b9e79b37796b4f9200d26edfa127d19.png?width=500&height=500" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" href="../static/styles/app.css">
+</head>
+<body>
+	<center>
+		<div class="card">
+	<h1>Nairobi Metropolitan House Prices Prediction</h1>
+</div>	
+	</center>
+	
+<div class="img"></div>
+<form class="form" action="/" method="post">
+	<h2>Location</h2>
+	<input type="text" id="location" name="uilocation" placeholder="Enter location...">
+	{% if location_missing %}
+		<p>{{ location_missing }}</p>
+	{% endif %}
+	<h2>Bedrooms</h2>
+	<div class="switch-field">
+		<input type="radio" id="radio-bhk-1" name="uiBHK" value="1"/>
+		<label for="radio-bhk-1">1</label>
+		<input type="radio" id="radio-bhk-2" name="uiBHK" value="2" checked/>
+		<label for="radio-bhk-2">2</label>
+		<input type="radio" id="radio-bhk-3" name="uiBHK" value="3"/>
+		<label for="radio-bhk-3">3</label>
+		<input type="radio" id="radio-bhk-4" name="uiBHK" value="4"/>
+		<label for="radio-bhk-4">4</label>
+		<input type="radio" id="radio-bhk-5" name="uiBHK" value="5"/>
+		<label for="radio-bhk-5">5</label>
+	</div>
+
+	<h2>Bathrooms</h2>
+	<div class="switch-field">
+		<input type="radio" id="radio-bath-1" name="uiBathrooms" value="1"/>
+		<label for="radio-bath-1">1</label>
+		<input type="radio" id="radio-bath-2" name="uiBathrooms" value="2" checked/>
+		<label for="radio-bath-2">2</label>
+		<input type="radio" id="radio-bath-3" name="uiBathrooms" value="3"/>
+		<label for="radio-bath-3">3</label>
+		<input type="radio" id="radio-bath-4" name="uiBathrooms" value="4"/>
+		<label for="radio-bath-4">4</label>
+		<input type="radio" id="radio-bath-5" name="uiBathrooms" value="5"/>
+		<label for="radio-bath-5">5</label>
+	</div>
+
+		<h2>Amenities</h2>
+		<ul class="amenities-grid">
+			<li class="amenity-item">
+				<input type="checkbox" id="alarm" name="Alarm" value="Alarm">
+				<label for="alarm">Alarm</label>
+		
+			    <class="amenity-item">
+				<input type="checkbox" id="bbq" name="BBQ" value="BBQ">
+				<label for="bbq">BBQ</label>
+			
+			    <class="amenity-item">
+				<input type="checkbox" id="balcony" name="Balcony" value="Balcony">
+				<label for="balcony">Balcony</label>
+			<li>
+			    <class="amenity-item">
+				<input type="checkbox" id="En Suite" name="En-Suite" value="En Suite">
+				<label for="En Suite">En Suite</label>
+				<class="amenity-item">
+				<input type="checkbox" id="Fibre Internet" name="Internet" value="Fibre Internet">
+				<label for="Fibre Internet">Fibre Internet</label>
+			</li>
+			<!-- Add more amenities as needed -->
+			
+			</li>
+			<!-- <button type="submit">Submit</button> -->
+		</ul>
+		
+	<button class="submit" type="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
+	<div id="uiEstimatedPrice" class="result">	<h2></h2> </div>
+	</form>
+</body>
+</html>
