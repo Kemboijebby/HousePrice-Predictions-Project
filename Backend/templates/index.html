@@ -80,7 +80,12 @@
 		</ul>
 		
 	<button class="submit" type="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
-	<div id="uiEstimatedPrice" class="result">	<h2></h2> </div>
+	<div id="uiEstimatedPrice" class="result">
+		{% if prediction %}
+			<h4>Predicted Price</h4>
+			{{ prediction }}
+		{% endif %}
+	</div>
 	</form>
 </body>
 </html>
