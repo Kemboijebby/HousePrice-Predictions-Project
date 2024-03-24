@@ -10,7 +10,7 @@ import pickle
 
 
 app = Flask(__name__)
-pwd = parse.quote('!@mElv!s@19')
+pwd = parse.quote('')
 
 # with open('model.pkl', 'rb') as f:
 #     model = pickle.load(f)
