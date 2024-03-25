@@ -10,7 +10,7 @@ import pickle
 
 
 app = Flask(__name__)
-pwd = parse.quote('!@mElv!s@19')
+pwd = parse.quote('')
 
 # with open('model.pkl', 'rb') as f:
 #     model = pickle.load(f)
@@ -96,6 +96,6 @@ def predictPrice():
         prediction = model.predict(input_data)
         pred = prediction[0][0]
 
-        return render_template('index.html', prediction=pred)
+        return render_template('index.html', prediction=pred) 
 
     return render_template('index.html')

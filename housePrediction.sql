@@ -6,7 +6,7 @@ USE housePrediction;
 
 CREATE TABLE IF NOT EXISTS locations (
     id INT NOT NULL AUTO_INCREMENT,
-    location VARCHAR(256) NOT NULL,
+    location VARCHAR(256) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );
 
