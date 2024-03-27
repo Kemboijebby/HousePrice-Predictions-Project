@@ -6,14 +6,11 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.models import load_model
 import pandas as pd
-import pickle
 
 
 app = Flask(__name__)
-pwd = parse.quote('')
+pwd = parse.quote('') # replace with your DB password
 
-# with open('model.pkl', 'rb') as f:
-#     model = pickle.load(f)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqldb://root:{pwd}@localhost:3306/housePrediction"
 db = SQLAlchemy(app)
@@ -22,7 +19,7 @@ db = SQLAlchemy(app)
 def predictPrice():
     """Endpoint to predict house rent price"""
     if request.method == 'POST':
-        location = request.form['uilocation'].capitalize().strip()
+        location = request.form['uilocation'].strip()
         locations = text("SELECT location FROM locations")
         locations = db.session.execute(locations).scalars()
         
