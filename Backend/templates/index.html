@@ -82,8 +82,8 @@
 	<button class="submit" type="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
 	<div id="uiEstimatedPrice" class="result">
 		{% if prediction %}
-			<h4>Predicted Price</h4>
-			{{ prediction }}
+			<h4>{{ prediction }}</h4>
+			
 		{% endif %}
 	</div>
 	</form>

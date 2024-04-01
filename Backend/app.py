@@ -37,33 +37,11 @@ def predictPrice():
         balcony = request.form.get('Balcony')
         en_suite = request.form.get('En-Suite')
         internet = request.form.get('Internet')
-        if alarm:
-            alarm = 1
-        else:
-            alarm = 0
-        if bbq:
-            bbq = 1
-        else:
-            bbq = 0
-        if balcony:
-            balcony = 1
-        else:
-            balcony = 0
-        if en_suite:
-            en_suite = 1
-        else:
-            en_suite = 0
-        if internet:
-            internet = 1
-        else:
-            internet = 0
 
         import pandas as pd
 
         model = load_model('./model.h5')
         
-
-
         data = {
             'Bedrooms': [float(bedrooms)],
             'Bathrooms': [float(bathrooms)],
@@ -73,12 +51,12 @@ def predictPrice():
             '\'Gym\'': [1],
             '\'Hospital\'': [0],
             '\'Lift/Elevator\'': [1],
+            
             '\'Scenic View\'': [0],
             '\'School\'': [1],
             '\'Shopping Centre\'': [0],
             '\'Swimming Pool\'': [1]
         }
-
 
         
         sample_data = pd.DataFrame(data)

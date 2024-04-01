@@ -29,6 +29,8 @@ data = data.dropna(subset=['Location'])
 
 locations = set(data['Location'])
 
+unique_locations = set()
+
 for location in locations:
     existing_loc = session.query(Location).filter_by(location=location).first()
     if existing_loc is None:
