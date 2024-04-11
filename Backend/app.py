@@ -2,10 +2,9 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from urllib import parse
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.models import load_model
+import pickle
 import pandas as pd
+import numpy as np
 
 
 app = Flask(__name__)
@@ -14,6 +13,8 @@ pwd = parse.quote('') # replace with your DB password
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqldb://root:{pwd}@localhost:3306/housePrediction"
 db = SQLAlchemy(app)
+
+model = pickle.load(open('model.pkl' , 'rb'))
 
 @app.route('/', methods=["GET", "POST"])
 def predictPrice():
@@ -26,10 +27,12 @@ def predictPrice():
         location_list = [ loc for loc in locations]
         print(location_list)
         print(location in location_list)
+        if location == "":
+            return render_template('index.html', location_missing=f"Please enter the location in order to continue with the prediction")
         if location not in location_list:
             return render_template('index.html', location_missing=f"cannot find {location}, please try searching for a ward in Nairobi")
 
-        
+
         bedrooms = request.form['uiBHK']
         bathrooms = request.form['uiBathrooms']
         alarm = request.form.get('Alarm')
@@ -37,40 +40,81 @@ def predictPrice():
         balcony = request.form.get('Balcony')
         en_suite = request.form.get('En-Suite')
         internet = request.form.get('Internet')
+        garden = request.form.get('Garden')
+        closet = request.form.get('Closet')
+        golf_course = request.form.get('GolfCourse')
+        staff_quarters = request.form.get('StaffQuarters')
+        wheelchair = request.form.get('WheelChair Access')
 
-        import pandas as pd
+        if alarm:
+            alarm = 1
+        else:
+            alarm = 0
+        if bbq:
+            bbq = 1
+        else:
+            bbq = 0
+        if balcony:
+            balcony = 1
+        else:
+            balcony = 0
+        if en_suite:
+            en_suite = 1
+        else:
+            en_suite = 0
+        if internet:
+            internet = 1
+        else:
+            internet = 0
+        if garden:
+            garden = 1 
+        else:
+            garden = 0
+        if closet:
+            closet = 1
+        else:
+            closet = 0
+        if golf_course:
+            golf_course = 1
+        else:
+            golf_course = 0
+        if staff_quarters:
+            staff_quarters = 1
+        else:
+            staff_quarters = 0
+        if wheelchair:
+            wheelchair = 1
+        else:
+            wheelchair = 0
+        my_columns=pd.read_csv('/home/crackygeek/Desktop/HousePrice-Predictions-Project/Backend/data/dataset_columns.csv')
 
-        model = load_model('./model.h5')
-        
-        data = {
-            'Bedrooms': [float(bedrooms)],
-            'Bathrooms': [float(bathrooms)],
-            '\'Borehole\'': [0],
-            '\'Bus Stop\'': [1],
-            '\'Golf Course\'': [0],
-            '\'Gym\'': [1],
-            '\'Hospital\'': [0],
-            '\'Lift/Elevator\'': [1],
-            
-            '\'Scenic View\'': [0],
-            '\'School\'': [1],
-            '\'Shopping Centre\'': [0],
-            '\'Swimming Pool\'': [1]
-        }
+        pred=predict_price(data=my_columns,location=location,bed=bedrooms,bath=bathrooms,balcony=balcony,
+                    ensiut=en_suite,alarm=alarm,bbq=bbq,fibreinternet=internet,garden=garden,StaffQuarters=staff_quarters,
+                    Closet=closet,WheelchairAccess=wheelchair,GolfCourse=golf_course)
 
-        
-        sample_data = pd.DataFrame(data)
-        # Convert dictionary to DataFrame
-        sample_df = pd.DataFrame(sample_data)
 
-        # Clean up column names
-        sample_df.columns = sample_df.columns.str.strip().str.replace("'", "")
-
-        # Predict using the model
-        input_data = sample_df.values.reshape(1, -1)  # Reshape to (1, num_features)
-        prediction = model.predict(input_data)
-        pred = prediction[0][0]
-
-        return render_template('index.html', prediction=pred) 
+        return render_template('index.html', prediction=round(pred, 0)) 
 
     return render_template('index.html')
+
+def predict_price(data,location,bed,bath,balcony,ensiut,alarm,bbq,fibreinternet,garden,StaffQuarters,Closet,
+       WheelchairAccess,GolfCourse):
+    print(data.head())
+    loc_index=np.where(data.columns==location)[0][0]
+    x=np.zeros(len(data.columns))
+    x[0] = bed
+    x[1] = bath
+    x[2] = balcony
+    x[3] = ensiut
+    x[4] = alarm
+    x[5] = bbq
+    x[6] = fibreinternet
+    x[7] = garden
+    x[8] = StaffQuarters
+    x[9] = Closet
+    x[10]= WheelchairAccess
+    x[11]= GolfCourse
+
+    if loc_index >=0:
+        x[loc_index]=1
+    return model.predict([x])[0]

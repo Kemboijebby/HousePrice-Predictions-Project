@@ -65,24 +65,48 @@
 			    <class="amenity-item">
 				<input type="checkbox" id="balcony" name="Balcony" value="Balcony">
 				<label for="balcony">Balcony</label>
-			<li>
-			    <class="amenity-item">
+			</li>
+
+
+			<li class="amenity-item">
 				<input type="checkbox" id="En Suite" name="En-Suite" value="En Suite">
 				<label for="En Suite">En Suite</label>
+				
 				<class="amenity-item">
 				<input type="checkbox" id="Fibre Internet" name="Internet" value="Fibre Internet">
 				<label for="Fibre Internet">Fibre Internet</label>
 			</li>
-			<!-- Add more amenities as needed -->
+
+			<li class="amenity-item">
+				<input type="checkbox" id="garden" name="Garden" value="Garden">
+				<label for="garden">Garden</label>
+		
+			    <class="amenity-item">
+				<input type="checkbox" id="closet" name="Closet" value="Closet">
+				<label for="closet">Closet</label>
 			
+			    <class="amenity-item">
+				<input type="checkbox" id="GolfCourse" name="GolfCourse" value="Golf Course">
+				<label for="GolfCourse">GolfCourse</label>
 			</li>
+
+			<li class="amenity-item">
+				<input type="checkbox" id="StaffQuarters" name="StaffQuarters" value="Staff Quarters">
+				<label for="StaffQuarters">Staff Quarters</label>
+			</li>
+
+			<li class="amenity-item">
+				<input type="checkbox" id="wheelchair" name="WheelChair" value="WheelChair Access">
+				<label for="wheelchair">WheelChair Access</label>
+			</li>
+			
 			<!-- <button type="submit">Submit</button> -->
 		</ul>
 		
-	<button class="submit" type="submit" onclick="onClickedEstimatePrice()" type="button">Estimate Price</button>
-	<div id="uiEstimatedPrice" class="result">
+	<button class="submit" type="submit" onclick="onClickedEstimatePrice()" type="button">Estimated Price</button>
+    <div id="uiEstimatedPrice" class="result">
 		{% if prediction %}
-			<h4>{{ prediction }}</h4>
+			<h4>Ksh {{ prediction }}0</h4>
 			
 		{% endif %}
 	</div>

@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+body, html {
+  height: 100%;
+}
+
 .switch-field {
 	display: flex;
 	margin-bottom: 36px;
@@ -58,34 +62,23 @@
 h2 {
 	font-size: 18px;
 	margin-bottom: 8px;
+  text-align:left;
+  padding-left: 20%;
 }
-.location{
+#location, .location{
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 76%;
-  border: 0;
-  margin: 0 0 10px;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 15px;
   height: 35px;
-  border-radius: 5px;
-}
-
-/* .Location{
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 76%;
   border: 0;
   margin: 0 0 10px;
   padding: 10px;
   box-sizing: border-box;
   font-size: 15px;
-  height: 40px;
   border-radius: 5px;
-} */
+  border-color:black;
+}
 
 .submit{
   background: #a5dc86;
@@ -94,7 +87,7 @@ h2 {
   margin: 25px 0 10px;
   box-sizing: border-box;
   font-size: 15px;
-	height: 35px;
+	height: 50px;
 	text-align: center;
 	border-radius: 5px;
 }
@@ -137,9 +130,7 @@ h2 {
     font-size:15px;
     font-family: 'Dosis', sans-serif;
 }
-body, html {
-  height: 100%;
-}
+
   .amenities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
