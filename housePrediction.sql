@@ -1,5 +1,3 @@
-DROP DATABASE IF EXISTS housePrediction;
-
 CREATE DATABASE IF NOT EXISTS housePrediction;
 
 USE housePrediction;
