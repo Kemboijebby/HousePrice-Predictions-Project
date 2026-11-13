@@ -1,20 +1,31 @@
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
-from urllib import parse
+from urllib.parse import quote_plus
+from pathlib import Path
+import os
 import pickle
 import pandas as pd
 import numpy as np
 
 
 app = Flask(__name__)
-pwd = parse.quote('') # replace with your DB password
+BASE_DIR = Path(__file__).resolve().parent
 
+mysql_user = os.environ["MYSQL_USER"]
+mysql_password = quote_plus(os.environ["MYSQL_PASSWORD"])
+mysql_host = os.getenv("MYSQL_HOST", "localhost")
+mysql_port = os.getenv("MYSQL_PORT", "3306")
+mysql_database = os.getenv("MYSQL_DATABASE", "housePrediction")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqldb://root:{pwd}@localhost:3306/housePrediction"
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"mysql+mysqldb://{mysql_user}:{mysql_password}@{mysql_host}:{mysql_port}/{mysql_database}"
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-model = pickle.load(open('model.pkl' , 'rb'))
+with open(BASE_DIR / "model.pkl", "rb") as model_file:
+    model = pickle.load(model_file)
 
 @app.route('/', methods=["GET", "POST"])
 def predictPrice():
@@ -86,7 +97,7 @@ def predictPrice():
             wheelchair = 1
         else:
             wheelchair = 0
-        my_columns=pd.read_csv('/home/crackygeek/Desktop/HousePrice-Predictions-Project/Backend/data/dataset_columns.csv')
+        my_columns = pd.read_csv(BASE_DIR / 'data' / 'dataset_columns.csv')
 
         pred=predict_price(data=my_columns,location=location,bed=bedrooms,bath=bathrooms,balcony=balcony,
                     ensiut=en_suite,alarm=alarm,bbq=bbq,fibreinternet=internet,garden=garden,StaffQuarters=staff_quarters,
